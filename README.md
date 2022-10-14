@@ -1,0 +1,1 @@
+# earthly-intellij-plugin
