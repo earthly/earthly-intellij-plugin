@@ -8,13 +8,18 @@
   <name>Earthly</name>
 
   <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor email="support@earthly.dev" url="https://earthly.dev/">earthly.dev/</vendor>
+  <vendor email="support@earthly.dev" url="https://earthly.dev">earthly.dev</vendor>
 
   <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description><![CDATA[
-    Adds syntax highlighting for Earthfile's
+    Adds <a href="https://docs.earthly.dev/docs/earthfile">Earthfiles</a> language support.
+    <ul>
+    <li>Earthfiles identification</li>
+    <li>Syntax highlighting</li>
+    </ul>
+    Source code hosted on <a href="https://github.com/earthly/earthly-intellij-plugin">GitHub</a>.
   ]]></description>
 
   <!-- Product and plugin compatibility requirements.

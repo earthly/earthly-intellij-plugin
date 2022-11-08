@@ -10,12 +10,11 @@ public class EarthTokenTypes {
    * Token types to be returned by the lexer
    */
   public static IElementType TARGET = new IElementType("TARGET", EarthlyLanguage.INSTANCE);
+
+  public static IElementType TARGET_REF = new IElementType("TARGET_REF", EarthlyLanguage.INSTANCE);
   public static IElementType COMMAND = new IElementType("COMMAND", EarthlyLanguage.INSTANCE);
-
   public static IElementType COMMAND_OPTION = new IElementType("COMMAND_OPTION", EarthlyLanguage.INSTANCE);
-
   public static IElementType COMMAND_OPTION_VALUE = new IElementType("COMMAND_OPTION_VALUE", EarthlyLanguage.INSTANCE);
-
   public static IElementType COMMAND_OPTION_EQUALS = new IElementType("COMMAND_OPTION_EQUALS", EarthlyLanguage.INSTANCE);
   public static IElementType COMMAND_ARG = new IElementType("COMMAND_ARG", EarthlyLanguage.INSTANCE);
   public static IElementType COMMENT = new IElementType("COMMENT", EarthlyLanguage.INSTANCE);

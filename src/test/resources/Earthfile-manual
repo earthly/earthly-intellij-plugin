@@ -1,0 +1,5 @@
+FROM ubuntu:22.04 --a=
+RUN --mount=asds=dsds asdasd
+my-target:
+    BUILD --platform=linux/amd64 +some-target --FOO=bar
+    COPY --platform=linux/amd64 (+some-target/some-file.txt --FOO=bar) ./

@@ -124,12 +124,14 @@ public class EarthLexer extends com.intellij.lexer.LexerBase {
     COMMAND_OPTION,
     COMMAND_OPTION_VALUE,
     COMMAND_ARGS,        // After a non option token is lexed
+
+    TARGET_REF,
     COMMENT,          // After a # is encountered in DEFAULT state
     BAD_LINE          // Line is not tokenized after error is found
   }
 
   private CharSequence buffer;
-  private int tokenStart, endOffset, offset;
+  private int tokenStart, tokenEnd, endOffset, offset;
   private LexerState initialState, state;
   private IElementType tokenType;
 
@@ -148,7 +150,7 @@ public class EarthLexer extends com.intellij.lexer.LexerBase {
 
   @Override
   public int getState() {
-    return this.state.ordinal();
+    return this.initialState.ordinal();
   }
 
   @Override
@@ -163,151 +165,195 @@ public class EarthLexer extends com.intellij.lexer.LexerBase {
 
   @Override
   public int getTokenEnd() {
-    return this.offset;
+    return this.tokenEnd;
   }
 
   @Override
   public void advance() {
-    this.tokenStart = offset;
-    if (offset > endOffset) {
-      this.tokenType = null;
-      return;
-    }
-    while (offset <= endOffset) {
-      char c = buffer.charAt(offset);
-      if (c == '\n') {
-        this.tokenType = EarthTokenTypes.LINE_BREAK;
-        this.state = LexerState.DEFAULT;
-        offset++;
+    this.initialState = state;
+    try {
+      this.tokenStart = offset;
+      if (offset > endOffset) {
+        this.tokenType = null;
         return;
       }
-      if (offset < endOffset && buffer.charAt(offset + 1) == '\n') {
-        offset++;
-        if (c == '\\') {
-          if (offset < endOffset) {
+      while (offset <= endOffset) {
+        char c = buffer.charAt(offset);
+        if (c == '\n') {
+          if (state == LexerState.DEFAULT) {
+            this.tokenType = EarthTokenTypes.LINE_BREAK;
             offset++;
-            continue;
-          }
-        }
-        return;
-      }
-      /*
-       * DEFAULT STATE
-       */
-      if (state == LexerState.DEFAULT) {
-        if (c == ' ') {
-          this.tokenType = EarthTokenTypes.WHITE_SPACE;
-          offset++;
-          return;
-        } else if (c == '#') {
-          this.state = LexerState.COMMENT;
-          offset++;
-        } else {
-          String line = getRemainingLineAt(offset).trim();
-          if (TARGET_PATTERN.matcher(line).matches()) {
-            this.tokenType = EarthTokenTypes.TARGET;
-            offset = offset + line.length();
             return;
           } else {
-            state = LexerState.COMMAND;
-          }
-        }
-        /*
-         * COMMAND STATE
-         */
-      } else if (state == LexerState.COMMAND) {
-        this.command = getCommand(offset);
-        if (this.command == null) {
-          this.state = LexerState.BAD_LINE;
-        } else {
-          offset = offset + command.toString().length();
-          this.state = LexerState.COMMAND_OPTION;
-          this.tokenType = EarthTokenTypes.COMMAND;
-          return;
-        }
-        /*
-         * COMMAND_OPTION STATE
-         */
-      } else if (state == LexerState.COMMAND_OPTION) {
-        if (c == ' ') {
-          this.tokenType = EarthTokenTypes.WHITE_SPACE;
-          offset++;
-          return;
-        }
-        String word = getRemainingCommandOptionAt(offset);
-        if (word.startsWith("--")) {
-          Command.Option option = command.getOptions().get(word);
-          if (option != null) {
-            this.tokenType = EarthTokenTypes.COMMAND_OPTION;
-            this.offset += word.length();
-            if (option.hasArguments) {
-              this.state = LexerState.COMMAND_OPTION_VALUE;
+            this.state = LexerState.DEFAULT;
+            if (offset != tokenEnd) {
+              return;
+            } else {
+              continue;
             }
+          }
+        }
+
+        if (offset < endOffset && buffer.charAt(offset + 1) == '\n') {
+          if (c == '\\') {
+            if (offset < endOffset) {
+              offset += 2;
+              continue;
+            }
+          }
+        }
+        /*
+         * DEFAULT STATE
+         */
+        if (state == LexerState.DEFAULT) {
+          if (c == ' ') {
+            this.tokenType = EarthTokenTypes.WHITE_SPACE;
+            offset++;
+            return;
+          } else if (c == '#') {
+            this.state = LexerState.COMMENT;
+            this.tokenType = EarthTokenTypes.COMMENT;
+            offset++;
           } else {
+            String line = getRemainingLineAt(offset).trim();
+            if (TARGET_PATTERN.matcher(line).matches()) {
+              this.tokenType = EarthTokenTypes.TARGET;
+              offset = offset + line.length();
+              return;
+            } else {
+              state = LexerState.COMMAND;
+            }
+          }
+          /*
+           * COMMAND STATE
+           */
+        } else if (state == LexerState.COMMAND) {
+          this.command = getCommand(offset);
+          if (this.command == null) {
             this.state = LexerState.BAD_LINE;
+            this.tokenType = EarthTokenTypes.BAD_CHARACTER;
+          } else {
+            offset = offset + command.toString().length();
+            this.state = LexerState.COMMAND_OPTION;
+            this.tokenType = EarthTokenTypes.COMMAND;
+            return;
+          }
+          /*
+           * COMMAND_OPTION STATE
+           */
+        } else if (state == LexerState.COMMAND_OPTION) {
+          if (c == ' ') {
+            this.tokenType = EarthTokenTypes.WHITE_SPACE;
+            offset++;
+            return;
+          }
+          String word = getRemainingCommandOptionAt(offset);
+          if (word.startsWith("--")) {
+            Command.Option option = command.getOptions().get(word);
+            if (option != null) {
+              this.tokenType = EarthTokenTypes.COMMAND_OPTION;
+              this.offset += word.length();
+              if (option.hasArguments) {
+                this.state = LexerState.COMMAND_OPTION_VALUE;
+              }
+            } else {
+              this.state = LexerState.BAD_LINE;
+              this.tokenType = EarthTokenTypes.BAD_CHARACTER;
+              continue;
+            }
+            return;
+          } else {
+            if (command == Command.FROM) {
+              this.state = LexerState.TARGET_REF;
+            } else if (command == Command.BUILD) {
+              this.state = LexerState.TARGET_REF;
+            } else if (command == Command.DO) {
+              this.state = LexerState.TARGET_REF;
+            } else {
+              this.state = LexerState.COMMAND_ARGS;
+            }
+          }
+          /*
+           * COMMAND_OPTION_VALUE STATE
+           */
+        } else if (state == LexerState.COMMAND_OPTION_VALUE) {
+          if (c == '=') {
+            this.tokenType = EarthTokenTypes.COMMAND_OPTION_EQUALS;
+            offset++;
+            return;
+          }
+          if (c == ' ') {
+            this.tokenType = EarthTokenTypes.WHITE_SPACE;
+            offset++;
+            return;
+          }
+          this.tokenType = EarthTokenTypes.COMMAND_OPTION_VALUE;
+          String word = getCommandOptionValue(offset);
+          if (word.contains("\n")) {
+            this.state = LexerState.BAD_LINE;
+            this.tokenType = EarthTokenTypes.BAD_CHARACTER;
             continue;
           }
+          this.offset += word.length();
+          this.state = LexerState.COMMAND_OPTION;
           return;
-        } else {
-          this.state = LexerState.COMMAND_ARGS;
-        }
-        /*
-         * COMMAND_ARGS STATE
-         */
-      } else if (state == LexerState.COMMAND_OPTION_VALUE) {
-        if (c == '=') {
-          this.tokenType = EarthTokenTypes.COMMAND_OPTION_EQUALS;
-          offset++;
-          return;
-        }
-        if (c == ' ') {
-          this.tokenType = EarthTokenTypes.WHITE_SPACE;
-          offset++;
-          return;
-        }
-        this.tokenType = EarthTokenTypes.COMMAND_OPTION_VALUE;
-        String word = getCommandOptionValue(offset);
-        if (word.contains("\n")) {
-          this.state = LexerState.BAD_LINE;
-          continue;
-        }
-        this.offset += word.length();
-        this.state = LexerState.COMMAND_OPTION;
-        return;
-        /*
-         * COMMAND_ARGS STATE
-         */
-      } else if (state == LexerState.COMMAND_ARGS) {
-        this.tokenType = EarthTokenTypes.COMMAND_ARG;
-        if (command == Command.SAVE_ARTIFACT) {
-          if (comesNext(" AS LOCAL")) {
+          /*
+           * TARGET_REF STATE
+           */
+        } else if (state == LexerState.TARGET_REF) {
+          if (c == ' ') {
+            this.state = LexerState.COMMAND_ARGS;
             this.tokenType = EarthTokenTypes.WHITE_SPACE;
             offset++;
-            return;
-          } else if (comesNext("AS LOCAL") && buffer.charAt(offset - 1) == ' ') {
-            this.tokenType = EarthTokenTypes.COMMAND;
-            offset += 8;
-            return;
-          } else if (comesBefore("AS LOCAL") && buffer.charAt(offset) == ' ') {
-            this.tokenType = EarthTokenTypes.WHITE_SPACE;
-            offset++;
-            return;
+          } else {
+            this.tokenType = EarthTokenTypes.TARGET_REF;
+            String target = getRemainingWord(offset);
+            offset += target.length();
           }
+          return;
+          /*
+           * COMMENT STATE
+           */
+        } else if (state == LexerState.COMMAND_ARGS) {
+          this.tokenType = EarthTokenTypes.COMMAND_ARG;
+          if (command == Command.SAVE_ARTIFACT) {
+            if (comesNext(" AS LOCAL")) {
+              this.tokenType = EarthTokenTypes.WHITE_SPACE;
+              offset++;
+              return;
+            } else if (comesNext("AS LOCAL") && buffer.charAt(offset - 1) == ' ') {
+              this.tokenType = EarthTokenTypes.COMMAND;
+              offset += 8;
+              return;
+            } else if (comesBefore("AS LOCAL") && buffer.charAt(offset) == ' ') {
+              this.tokenType = EarthTokenTypes.WHITE_SPACE;
+              offset++;
+              return;
+            }
+          }
+          offset++;
+          /*
+           * COMMENT STATE
+           */
+        } else if (state == LexerState.COMMENT) {
+          offset++;
+          /*
+           * BAD_LINE STATE
+           */
+        } else if (state == LexerState.BAD_LINE) {
+          offset++;
         }
-        offset++;
-        /*
-         * COMMENT STATE
-         */
-      } else if (state == LexerState.COMMENT) {
-        this.tokenType = EarthTokenTypes.COMMENT;
-        offset++;
-        /*
-         * BAD_LINE STATE
-         */
-      } else if (state == LexerState.BAD_LINE) {
-        this.tokenType = EarthTokenTypes.BAD_CHARACTER;
-        offset++;
       }
+    } finally {
+      this.tokenEnd = offset;
+    }
+  }
+
+  private void processCommandArgs() {
+    if (command == Command.FROM) {
+      String targetRef = getRemainingWord(tokenStart);
+      this.offset = tokenStart + targetRef.length();
+      this.tokenType = EarthTokenTypes.TARGET_REF;
     }
   }
 
@@ -403,6 +449,10 @@ public class EarthLexer extends com.intellij.lexer.LexerBase {
   }
 
   private String getRemainingCommandOptionAt(int start) {
+    return getRemainingWord(start);
+  }
+
+  private String getRemainingWord(int start) {
     int i = start;
     while (i < endOffset) {
       char c = buffer.charAt(i);

@@ -13,11 +13,12 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
 
 public class EarthlySyntaxHighlighter extends SyntaxHighlighterBase {
 
-  public static final TextAttributesKey TARGET = createTextAttributesKey("EARTHLY_TARGET", DefaultLanguageHighlighterColors.STATIC_METHOD);
+  public static final TextAttributesKey TARGET_REF = createTextAttributesKey("TARGET_REF", DefaultLanguageHighlighterColors.METADATA);
+  public static final TextAttributesKey TARGET = createTextAttributesKey("EARTHLY_TARGET", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
   public static final TextAttributesKey COMMAND = createTextAttributesKey("EARTHLY_COMMAND", DefaultLanguageHighlighterColors.KEYWORD);
 
   public static final TextAttributesKey COMMAND_OPTION = createTextAttributesKey("EARTHLY_COMMAND_OPTION", DefaultLanguageHighlighterColors.KEYWORD);
-  public static final TextAttributesKey COMMAND_OPTION_VALUE = createTextAttributesKey("EARTHLY_COMMAND_OPTION_VALUE", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
+  public static final TextAttributesKey COMMAND_OPTION_VALUE = createTextAttributesKey("EARTHLY_COMMAND_OPTION_VALUE", DefaultLanguageHighlighterColors.STRING);
 
   public static final TextAttributesKey COMMENT = createTextAttributesKey("EARTHLY_COMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("EARTHLY_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
@@ -40,6 +41,8 @@ public class EarthlySyntaxHighlighter extends SyntaxHighlighterBase {
       key = COMMAND_OPTION_VALUE;
     } else if (tokenType == EarthTokenTypes.TARGET) {
       key = TARGET;
+    } else if (tokenType == EarthTokenTypes.TARGET_REF) {
+      key = TARGET_REF;
     } else if (tokenType == EarthTokenTypes.BAD_CHARACTER) {
       key = BAD_CHARACTER;
     } else if (tokenType == EarthTokenTypes.COMMENT) {

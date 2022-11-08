@@ -9,15 +9,16 @@ import org.junit.Assert;
 
 public class LexerTests {
 
-  @org.junit.jupiter.api.Test
-  public void regressionTest() throws IOException {
+  private static void test(String resource, boolean checkExpected) throws IOException {
     AnsiCode.setActive(true);
     EarthLexer lexer = new EarthLexer();
-    String code = new String(LexerTests.class.getClassLoader().getResourceAsStream("Earthfile0").readAllBytes());
-    lexer.start(code);
+    String code = new String(LexerTests.class.getClassLoader().getResourceAsStream(resource).readAllBytes());
+      lexer.start(code);
     Map<IElementType, Integer> counters = new LinkedHashMap<>();
     IElementType tokenType;
+    StringBuilder sb = new StringBuilder();
     while ((tokenType = lexer.getTokenType()) != null) {
+      sb.append("[" + tokenType + "->]" + code.substring(lexer.getTokenStart(), lexer.getTokenEnd()));
       System.out.print(AnsiCode.YELLOW + "[" + tokenType + "->]" + AnsiCode.RESET + code.substring(lexer.getTokenStart(), lexer.getTokenEnd()));
       Integer counter = counters.get(tokenType);
       if (counter == null) {
@@ -26,7 +27,24 @@ public class LexerTests {
       counters.put(tokenType, counter+1);
       lexer.advance();
     }
-    System.out.println();
-    Assert.assertEquals("{COMMAND=104, WHITE_SPACE=378, COMMAND_ARG=93, LINE_BREAK=134, COMMENT=5, TARGET=13, COMMAND_OPTION=22, COMMAND_OPTION_VALUE=22, COMMAND_OPTION_EQUALS=5}",counters.toString());
+    if(checkExpected) {
+      String expected = new String(LexerTests.class.getClassLoader().getResourceAsStream(resource + ".expected").readAllBytes());
+      Assert.assertEquals(expected, sb.toString());
+    }
+  }
+
+  @org.junit.jupiter.api.Test
+  public void testGlobal() throws IOException {
+    test("Earthfile-global", true);
+  }
+
+  @org.junit.jupiter.api.Test
+  public void testComments() throws IOException {
+    test("Earthfile-comments", true);
+  }
+
+  @org.junit.jupiter.api.Test
+  public void testManual() throws IOException {
+    test("Earthfile-manual", false);
   }
 }
