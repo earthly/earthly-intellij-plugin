@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin>
+<idea-plugin url="https://github.com/earthly/earthly-intellij-plugin">
   <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-  <id>com.example.earthly-intellij-plugin</id>
+  <id>dev.earthly.earthly-intellij-plugin</id>
 
   <!-- Public plugin name should be written in Title Case.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -9,7 +9,6 @@
 
   <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
   <vendor email="support@earthly.dev" url="https://earthly.dev">earthly.dev</vendor>
-
   <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
@@ -19,6 +18,7 @@
     <li>Earthfiles identification</li>
     <li>Syntax highlighting</li>
     </ul>
+    <br>
     Source code hosted on <a href="https://github.com/earthly/earthly-intellij-plugin">GitHub</a>.
   ]]></description>
 
