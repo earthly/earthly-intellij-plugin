@@ -454,7 +454,7 @@ public class EarthLexer extends com.intellij.lexer.LexerBase {
 
   private String getRemainingWord(int start) {
     int i = start;
-    while (i < endOffset) {
+    while (i <= endOffset) {
       char c = buffer.charAt(i);
       if (c == '=' || c == ' ' || c < 32 || c > 126) {
         break;
