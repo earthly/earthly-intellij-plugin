@@ -6,6 +6,7 @@ import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.registry.Registry;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.Interner;
 import dev.earthly.plugin.metadata.EarthlyFileType;
@@ -17,17 +18,26 @@ import java.io.UncheckedIOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.plugins.textmate.bundles.Bundle;
+import org.jetbrains.plugins.textmate.bundles.VSCBundle;
+import org.jetbrains.plugins.textmate.language.TextMateLanguageDescriptor;
+import org.jetbrains.plugins.textmate.language.syntax.TextMateSyntaxTable;
+import org.jetbrains.plugins.textmate.language.syntax.highlighting.TextMateHighlighter;
+import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateHighlightingLexer;
+import org.jetbrains.plugins.textmate.plist.CompositePlistReader;
+import org.jetbrains.plugins.textmate.plist.Plist;
+import org.jetbrains.plugins.textmate.plist.PlistReader;
 
 public class EarthlySyntaxHighlighterFactory extends SyntaxHighlighterFactory {
 
   @NotNull
   @Override
   public SyntaxHighlighter getSyntaxHighlighter(Project project, VirtualFile virtualFile) {
-    return new EarthlySyntaxHighlighter();
+    TextMateHighlightingLexer lexer = new TextMateHighlightingLexer(getTextMateLanguageDescriptor(), Registry.get("textmate.line.highlighting.limit").asInteger());
+    return new TextMateHighlighter(lexer);
   }
 
-
-  private static TextMate getTextMateLanguageDescriptor() {
+  private static TextMateLanguageDescriptor getTextMateLanguageDescriptor() {
     try {
       Bundle earthlyBundle = new VSCBundle("earthly", getBundlePath().getAbsolutePath());
       TextMateSyntaxTable syntaxTable = new TextMateSyntaxTable();
@@ -35,10 +45,7 @@ public class EarthlySyntaxHighlighterFactory extends SyntaxHighlighterFactory {
       PlistReader plistReader = new CompositePlistReader();
       Plist plist = plistReader.read(earthlyBundle.getGrammarFiles().stream().findFirst().get());
       CharSequence scopeName = syntaxTable.loadSyntax(plist, interner);
-      TextMateLanguageDescriptor textMateLanguageDescriptor = new TextMateLanguageDescriptor(scopeName, syntaxTable.getSyntax(scopeName));
-      System.out.println(textMateLanguageDescriptor);
-
-
+      return new TextMateLanguageDescriptor(scopeName, syntaxTable.getSyntax(scopeName));
     } catch (Exception ex) {
       throw new RuntimeException(ex);
     }
@@ -95,6 +102,4 @@ public class EarthlySyntaxHighlighterFactory extends SyntaxHighlighterFactory {
       zip.close();
     }
   }
-
-
 }
