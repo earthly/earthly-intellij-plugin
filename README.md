@@ -1,6 +1,6 @@
 # earthly-intellij-plugin
 
-IntelliJ plugin for Earthly language support.
+IntelliJ plugin for Earthly language support. 
 
 ## Features
 - [x] Syntax highlighting for Earthfiles
@@ -13,11 +13,25 @@ IntelliJ plugin for Earthly language support.
 ![Darcula theme](documentation/darcula.png)
 ![Light theme](documentation/light.png)
 
-## Testing
-### Running an IDE instance
-1. Run `earthly +ide`. This will open an IDE instance with the plugin installed (requires `java` and `gradle` installed locally);
-2. Create a new Java project
-3. Create a new file named `Earthfile` and paste the contents of your choice there.
+## Building
+The following command generates a `earthly-intellij-plugin-<version>.zip` package in the current directory:
+```
+earthly +build [--version=<version>]
+```
 
-### Running jUnit tests
-1. Run `earthly +test`
+## Signing (requires `earthly-technologies` org membership)
+The following command generates a `earthly-intellij-plugin-signed-<version>.zip` package in the current directory:
+```
+earthly +sign [--version=<version>]
+```
+
+## Publishing (requires `earthly-technologies` org membership)
+The following command generates builds, signs and publish the plugin to the [IntelliJ Marketplace](https://plugins.jetbrains.com/plugin/20392-earthly):
+```
+earthly --push +publish --version=<version>
+```
+
+## Testing
+```
+earthly +ide
+```

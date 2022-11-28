@@ -1,14 +1,11 @@
-package dev.earthly.plugin.language;
+package dev.earthly.plugin.language.syntax.highlighting;
 
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManagerCore;
 import com.intellij.openapi.extensions.PluginId;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.registry.Registry;
-import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Interner;
+import dev.earthly.plugin.language.syntax.lexer.EarthlyElementType;
 import dev.earthly.plugin.metadata.EarthlyFileType;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,24 +14,29 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.plugins.textmate.bundles.Bundle;
 import org.jetbrains.plugins.textmate.bundles.VSCBundle;
 import org.jetbrains.plugins.textmate.language.TextMateLanguageDescriptor;
 import org.jetbrains.plugins.textmate.language.syntax.TextMateSyntaxTable;
-import org.jetbrains.plugins.textmate.language.syntax.highlighting.TextMateHighlighter;
+import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateElementType;
 import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateHighlightingLexer;
 import org.jetbrains.plugins.textmate.plist.CompositePlistReader;
 import org.jetbrains.plugins.textmate.plist.Plist;
 import org.jetbrains.plugins.textmate.plist.PlistReader;
 
-public class EarthlySyntaxHighlighterFactory extends SyntaxHighlighterFactory {
+public class EarthlyHighlightingLexer extends TextMateHighlightingLexer {
 
-  @NotNull
-  @Override
-  public SyntaxHighlighter getSyntaxHighlighter(Project project, VirtualFile virtualFile) {
-    TextMateHighlightingLexer lexer = new TextMateHighlightingLexer(getTextMateLanguageDescriptor(), Registry.get("textmate.line.highlighting.limit").asInteger());
-    return new TextMateHighlighter(lexer);
+  public EarthlyHighlightingLexer() {
+    super(getTextMateLanguageDescriptor(), 20000);
+  }
+
+  public IElementType getTokenType() {
+    TextMateElementType tokenType = (TextMateElementType) super.getTokenType();
+    if (tokenType == null) {
+      return null;
+    }
+    IElementType ret = new EarthlyElementType(tokenType.getScope());
+    return ret;
   }
 
   private static TextMateLanguageDescriptor getTextMateLanguageDescriptor() {

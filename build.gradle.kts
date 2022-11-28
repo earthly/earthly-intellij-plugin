@@ -12,7 +12,7 @@ dependencies {
 sourceSets["main"].java.srcDirs("src/main/gen")
 
 group = "dev.earthly"
-version = "0.0.1"
+version = "0.0.0"
 
 repositories {
     mavenCentral()
