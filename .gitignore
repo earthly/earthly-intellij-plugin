@@ -4,6 +4,7 @@ gradle
 gradlew
 gradlew.bat
 src/main/resources/vsc-bundle.zip
+earthly-intellij-plugin-*.zip
 !**/src/main/**/build/
 !**/src/test/**/build/
 
