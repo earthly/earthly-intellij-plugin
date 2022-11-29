@@ -4,15 +4,14 @@ RUN apt-get update && apt-get install -y \
   zip \
   && rm -rf /var/lib/apt/lists/*
 ARG version=0.0.0
-ARG bundle
+ARG bundle="github.com/earthly/earthly/contrib/earthfile-syntax-highlighting+export/"
 COPY settings.gradle.kts build.gradle.kts ./
 COPY scripts scripts
 COPY src src
 
 GET_BUNDLE:
   COMMAND
-  COPY github.com/earthly/earthly/contrib/earthfile-syntax-highlighting+export/ build/
-  # COPY ../earthly/contrib/earthfile-syntax-highlighting+export/ build/
+  COPY $bundle build/
   RUN scripts/bundle.sh build/earthfile-syntax-highlighting
 
 dist:
