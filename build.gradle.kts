@@ -12,7 +12,7 @@ dependencies {
 sourceSets["main"].java.srcDirs("src/main/gen")
 
 group = "dev.earthly"
-version = "0.0.1"
+version = "0.0.0"
 
 repositories {
     mavenCentral()
@@ -22,7 +22,7 @@ repositories {
 intellij {
     version.set("2021.2")
     type.set("IC") // Target IDE Platform
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf("org.jetbrains.plugins.textmate","com.intellij.java","org.jetbrains.plugins.textmate"))
 }
 
 tasks {

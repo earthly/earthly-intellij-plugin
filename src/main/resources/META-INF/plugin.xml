@@ -25,6 +25,8 @@
   <!-- Product and plugin compatibility requirements.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+  <depends>org.jetbrains.plugins.textmate</depends>
 
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
@@ -34,9 +36,7 @@
       implementationClass="dev.earthly.plugin.metadata.EarthlyFileType"
       fieldName="INSTANCE"
       language="Earthly"
-      fileNames = "Earthfile"/>
-    <lang.syntaxHighlighterFactory
-      language="Earthly"
-      implementationClass="dev.earthly.plugin.language.EarthlySyntaxHighlighterFactory"/>
+      patterns="Earthfile;*.earth;*.earthly;*.Earthfile"/>
+    <editorHighlighterProvider filetype="Earthfile" implementationClass="dev.earthly.plugin.language.syntax.highlighting.EarthlyEditorHighlighterProvider"/>
   </extensions>
 </idea-plugin>
