@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-collections4:4.4")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 }
@@ -21,8 +20,8 @@ repositories {
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     version.set("2022.3")
-    type.set("GO") // Target IDE Platform
-    plugins.set(listOf("org.jetbrains.plugins.textmate","org.jetbrains.plugins.go"))
+    type.set("PY")
+    plugins.set(listOf("org.jetbrains.plugins.textmate","Pythonid"))
 }
 
 tasks {
