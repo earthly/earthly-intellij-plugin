@@ -12,7 +12,7 @@ dependencies {
 sourceSets["main"].java.srcDirs("src/main/gen")
 
 group = "dev.earthly"
-version = "0.0.0"
+version = "0.0.0-go"
 
 repositories {
     mavenCentral()
@@ -21,8 +21,8 @@ repositories {
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     version.set("2022.3")
-    type.set("IC") // Target IDE Platform
-    plugins.set(listOf("org.jetbrains.plugins.textmate","com.intellij.java","org.jetbrains.plugins.textmate"))
+    type.set("GO") // Target IDE Platform
+    plugins.set(listOf("org.jetbrains.plugins.textmate","org.jetbrains.plugins.go"))
 }
 
 tasks {
