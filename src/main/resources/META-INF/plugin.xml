@@ -22,6 +22,15 @@
     Source code hosted on <a href="https://github.com/earthly/earthly-intellij-plugin">GitHub</a>.
   ]]></description>
 
+  <change-notes><![CDATA[
+<h2>New Features</h2>
+<ul>
+  <li>Add support for patform build 231</li>
+  <li>Add highlighting for WAIT, TRY, FINALLY, CACHE, HOST, PIPELINE, TRIGGER and PROJECT</li>
+</ul>
+]]>
+  </change-notes>
+
   <!-- Product and plugin compatibility requirements.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
