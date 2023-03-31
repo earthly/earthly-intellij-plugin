@@ -28,12 +28,13 @@ intellij {
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     patchPluginXml {
-        sinceBuild.set("223")
+        sinceBuild.set("212")
+        untilBuild.set("223.*")
     }
 
     signPlugin {
