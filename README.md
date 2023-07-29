@@ -19,6 +19,11 @@ The following command generates a `earthly-intellij-plugin-<version>.zip` packag
 earthly +build [--version=<version>]
 ```
 
+For local development, this will generate a gradle wrapper (`gradle/`) corresponding to the gradle version used in the build itself:
+```
+earthly +generate-gradle-wrapper
+```
+
 ## Signing (requires `earthly-technologies` org membership)
 The following command generates a `earthly-intellij-plugin-signed-<version>.zip` package in the current directory:
 ```

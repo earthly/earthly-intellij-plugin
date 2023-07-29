@@ -44,3 +44,10 @@ ide:
   LOCALLY
   DO +GET_BUNDLE
   RUN gradle runIde
+
+generate-gradle-wrapper:
+  # Simply running 'wrapper' results in downloading the actual project dependencies,
+  # which is a waste, so we create a dummy project and generate a wrapper from that.
+  WORKDIR /tmp/wrap
+  RUN gradle --no-daemon init wrapper
+  SAVE ARTIFACT ./gradle AS LOCAL ./gradle
