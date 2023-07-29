@@ -1,5 +1,6 @@
 VERSION 0.6
-FROM gradle:jdk17
+ARG gradle_version=8.2.1
+FROM gradle:${gradle_version}-jdk17
 RUN apt-get update && apt-get install -y \
   zip \
   && rm -rf /var/lib/apt/lists/*
