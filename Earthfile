@@ -21,7 +21,7 @@ dist:
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-$version.zip
 
 sign:
-  FROM +build
+  FROM +dist
   RUN --mount=type=cache,target=/root/.gradle/caches \
     --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
     --secret PRIVATE_KEY=+secrets/earthly-technologies/intellij-plugin/private.pem \
