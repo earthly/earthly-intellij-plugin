@@ -25,8 +25,8 @@
   <change-notes><![CDATA[
 <h2>New Features</h2>
 <ul>
-  <li>Add support for patform build 231</li>
-  <li>Add highlighting for WAIT, TRY, FINALLY, CACHE, HOST, PIPELINE, TRIGGER and PROJECT</li>
+  <li>Add support for platform build 232</li>
+  <li>Add highlighting for SET, LET, ADD, STOP SIGNAL, ONBUILD, and SHELL</li>
 </ul>
 ]]>
   </change-notes>

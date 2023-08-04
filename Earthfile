@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
   zip \
   && rm -rf /var/lib/apt/lists/*
 ARG version=0.0.0
-ARG bundle="github.com/earthly/earthly/contrib/earthfile-syntax-highlighting+export/"
+ARG bundle="github.com/earthly/earthfile-grammar+export/"
 COPY settings.gradle.kts build.gradle.kts ./
 COPY scripts scripts
 COPY src src
@@ -21,7 +21,7 @@ dist:
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-$version.zip
 
 sign:
-  FROM +dist
+  FROM +build
   RUN --mount=type=cache,target=/root/.gradle/caches \
     --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
     --secret PRIVATE_KEY=+secrets/earthly-technologies/intellij-plugin/private.pem \
