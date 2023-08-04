@@ -16,7 +16,7 @@ IntelliJ plugin for Earthly language support.
 ## Building
 The following command generates a `earthly-intellij-plugin-<version>.zip` package in the current directory:
 ```
-earthly +build [--version=<version>]
+earthly +dist [--version=<version>]
 ```
 
 ## Signing (requires `earthly-technologies` org membership)
