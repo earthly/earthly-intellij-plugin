@@ -17,7 +17,7 @@ Check the currently released versions [on the JetBrains Marketplace](https://plu
 
 ## Requirements
 
-This  plugin is dependent on https://github.com/earthly/earthfile-grammar for syntax.
+This plugin is dependent on https://github.com/earthly/earthfile-grammar for syntax.
 
 This project has three branches for building intellij plugins. They are:
 - py
