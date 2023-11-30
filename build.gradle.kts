@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.intellij") version "1.16.0"
 }
 
 dependencies {
@@ -20,7 +20,7 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version.set("2022.3")
+    version.set("2021.2")
     type.set("IC") // Target IDE Platform
     plugins.set(listOf("org.jetbrains.plugins.textmate","com.intellij.java","org.jetbrains.plugins.textmate"))
 }
@@ -34,7 +34,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("212")
-        untilBuild.set("231.*")
+        untilBuild.set("233.*")
     }
 
     signPlugin {
