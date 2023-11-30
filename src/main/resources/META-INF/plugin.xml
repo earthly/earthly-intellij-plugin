@@ -35,6 +35,13 @@
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
   <depends>org.jetbrains.plugins.textmate</depends>
+  <depends optional="true">com.intellij.java</depends>
+  <depends optional="true">org.jetbrains.kotlin</depends>
+  <depends optional="true">com.jetbrains.php</depends>
+  <depends optional="true">com.intellij.modules.ruby</depends>
+  <depends optional="true">com.intellij.modules.python</depends>
+  <depends optional="true" >org.jetbrains.plugins.go</depends>
+
 
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
