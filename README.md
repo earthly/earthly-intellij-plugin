@@ -37,7 +37,7 @@ earthly +sign [--version=<version>]
 ```
 
 ## Publishing (requires `earthly-technologies` org membership)
-The following command generates builds, signs and publish the plugin to the [IntelliJ Marketplace](https://plugins.jetbrains.com/plugin/20392-earthly):
+The following command builds, signs and publishes the plugin to the [IntelliJ Marketplace](https://plugins.jetbrains.com/plugin/20392-earthly):
 ```
 earthly --push +publish --version=<version>
 ```
