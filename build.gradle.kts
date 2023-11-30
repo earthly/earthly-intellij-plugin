@@ -22,7 +22,7 @@ repositories {
 intellij {
     version.set("2021.2")
     type.set("IC") // Target IDE Platform
-    plugins.set(listOf("org.jetbrains.plugins.textmate","com.intellij.java","org.jetbrains.plugins.textmate"))
+    plugins.set(listOf("org.jetbrains.plugins.textmate"))
 }
 
 tasks {

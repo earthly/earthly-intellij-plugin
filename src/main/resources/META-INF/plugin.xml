@@ -25,8 +25,8 @@
   <change-notes><![CDATA[
 <h2>New Features</h2>
 <ul>
-  <li>Add support for platform build 232</li>
-  <li>Add highlighting for SET, LET, ADD, STOP SIGNAL, ONBUILD, and SHELL</li>
+  <li>Add support for platform build 233</li>
+  <li>Add highlighting for FUNCTION, fix ELSE IF</li>
 </ul>
 ]]>
   </change-notes>
@@ -34,7 +34,6 @@
   <!-- Product and plugin compatibility requirements.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
   <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.java</depends>
   <depends>org.jetbrains.plugins.textmate</depends>
 
   <!-- Extension points defined by the plugin.
