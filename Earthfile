@@ -1,11 +1,11 @@
-VERSION 0.6
+VERSION 0.7
 ARG gradle_version=8.2.1
 FROM gradle:${gradle_version}-jdk17
 RUN apt-get update && apt-get install -y \
   zip \
   && rm -rf /var/lib/apt/lists/*
-ARG version=0.0.0
-ARG bundle="github.com/earthly/earthfile-grammar+export/"
+ARG --global version=0.0.0
+ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 COPY settings.gradle.kts build.gradle.kts ./
 COPY scripts scripts
 COPY src src
