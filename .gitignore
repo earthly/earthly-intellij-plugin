@@ -9,6 +9,7 @@ earthly-intellij-plugin-*.zip
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
+.run
 .idea
 *.iws
 *.iml
