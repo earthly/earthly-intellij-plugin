@@ -18,4 +18,4 @@ jobs:
       - name: Release
 #       run: earthly --org earthly-technologies --satellite lib --push +publish --version=$RELEASE_VERSION
         # For testing purposes lets use +build before trying +publish
-        run: earthly --org earthly-technologies --satellite lib --push +build --version=$RELEASE_VERSION
+        run: earthly --org earthly-technologies --satellite lib --push +dist --version=$RELEASE_VERSION
