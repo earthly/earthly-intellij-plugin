@@ -42,6 +42,8 @@ The following command builds, signs and publishes the plugin to the [IntelliJ Ma
 earthly --push +publish --version=<version>
 ```
 
+This target is automatically triggered when a new git tag is pushed in the form of `vX.Y.Z`.
+
 ## Testing
 ```
 earthly +ide
