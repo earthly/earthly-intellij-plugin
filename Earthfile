@@ -1,17 +1,16 @@
-VERSION 0.7
-ARG gradle_version=8.2.1
+VERSION --pass-args --use-function-keyword 0.7
+ARG gradle_version=8.5.0
 FROM gradle:${gradle_version}-jdk17
 RUN apt-get update && apt-get install -y \
   zip \
   && rm -rf /var/lib/apt/lists/*
-ARG --global version=0.0.0
 ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 COPY settings.gradle.kts build.gradle.kts ./
 COPY scripts scripts
 COPY src src
 
 GET_BUNDLE:
-  COMMAND
+  FUNCTION
   COPY $bundle build/
   RUN scripts/bundle.sh build/earthfile-syntax-highlighting
 
@@ -19,10 +18,11 @@ dist:
   DO +GET_BUNDLE
   RUN sed -i 's^0.0.0^'"$version"'^g' ./build.gradle.kts
   RUN --mount=type=cache,target=/root/.gradle/caches gradle --no-daemon buildPlugin
+  ARG version=0.0.0
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-$version.zip
 
 sign:
-  FROM +dist
+  FROM --pass-args +dist
   RUN --mount=type=cache,target=/root/.gradle/caches \
     --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
     --secret PRIVATE_KEY=+secrets/earthly-technologies/intellij-plugin/private.pem \
@@ -31,7 +31,7 @@ sign:
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-signed-$version.zip
 
 publish:
-  FROM +sign
+  FROM --pass-args +sign
   RUN --push \
     --mount=type=cache,target=/root/.gradle/caches \
     --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
