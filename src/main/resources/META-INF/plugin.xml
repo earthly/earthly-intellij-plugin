@@ -53,6 +53,5 @@
       language="Earthly"
       patterns="Earthfile;*.earth;*.earthly;*.Earthfile"/>
     <editorHighlighterProvider filetype="Earthfile" implementationClass="dev.earthly.plugin.language.syntax.highlighting.EarthlyEditorHighlighterProvider"/>
-    <lang.commenter language="Earthly" implementationClass="dev.earthly.plugin.language.EarthlyCommenter"/>
   </extensions>
 </idea-plugin>
