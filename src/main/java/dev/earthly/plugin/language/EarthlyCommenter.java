@@ -1,3 +1,8 @@
+package dev.earthly.plugin.language.syntax.highlighting;
+
+import com.intellij.lang.Commenter;
+import org.jetbrains.annotations.Nullable;
+
 final class EarthlyCommenter implements Commenter {
 
   @Nullable
