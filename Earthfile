@@ -19,11 +19,11 @@ install:
   DO gradle+GRADLE_GET_MOUNT_CACHE
 
 src:
-  ARG --required version
   FROM +install
   COPY src src
   COPY scripts scripts
   DO +GET_BUNDLE
+  ARG --required version
   RUN sed -i 's^0.0.0^'"$version"'^g' ./build.gradle.kts
 
 # dist builds the plugin and saves the artifact locally
