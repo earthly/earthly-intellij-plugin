@@ -1,5 +1,6 @@
 VERSION --pass-args --global-cache 0.7
-IMPORT github.com/earthly/lib/gradle:dbf7cbb9115c02809ebd7cea217bee955ddde6d8 AS gradle
+PROJECT earthly-technologies/core
+IMPORT github.com/earthly/lib/gradle:83b97695005665da1e97d0e4b8ac2213868f649316d9e15576a4e600126ab2ee AS gradle
 ARG --global gradle_version=8.2.1
 ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 
@@ -9,7 +10,8 @@ install:
     zip \
     && rm -rf /var/lib/apt/lists/*
   COPY settings.gradle.kts build.gradle.kts ./
-  DO gradle+INIT
+  # Sets $EARTHLY_GRADLE_USER_HOME_CACHE and $EARTHLY_GRADLE_PROJECT_CACHE
+  DO gradle+GRADLE_GET_MOUNT_CACHE
 
 src:
   FROM +install
@@ -22,29 +24,29 @@ dist:
   FROM +src
   ARG version=0.0.0
   RUN sed -i 's^0.0.0^'"$version"'^g' ./build.gradle.kts
-  DO gradle+RUN_WITH_CACHE --command="gradle --configuration-cache --no-daemon buildPlugin"
+  RUN --mount=$EARTHLY_GRADLE_USER_HOME_CACHE --mount=$EARTHLY_GRADLE_PROJECT_CACHE gradle --no-daemon buildPlugin
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-$version.zip
 
 sign:
   ARG --required version
-  FROM --pass-args +dist
-  RUN --mount=type=cache,id=gradle_cache,target=/root/.gradle/caches \
-    --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
-    --secret PRIVATE_KEY=+secrets/earthly-technologies/intellij-plugin/private.pem \
-    --secret PRIVATE_KEY_PASSWORD=+secrets/earthly-technologies/intellij-plugin/private-key-password \
-  DO gradle+RUN_WITH_CACHE --command="gradle --no-daemon signPlugin"
+  FROM +src
+  RUN --mount=$EARTHLY_GRADLE_USER_HOME_CACHE --mount=$EARTHLY_GRADLE_PROJECT_CACHE \
+    --secret CERTIFICATE_CHAIN=intellij-plugin/chain.crt \
+    --secret PRIVATE_KEY=intellij-plugin/private.pem \
+    --secret PRIVATE_KEY_PASSWORD=intellij-plugin/private-key-password \
+    gradle --no-daemon signPlugin
   SAVE ARTIFACT build/distributions/earthly-intellij-plugin-$version.zip AS LOCAL earthly-intellij-plugin-signed-$version.zip
 
 publish:
   ARG --required version
   FROM --pass-args +sign
   RUN --push \
-    --mount=type=cache,id=gradle_cache,target=/root/.gradle/caches \
-    --secret CERTIFICATE_CHAIN=+secrets/earthly-technologies/intellij-plugin/chain.crt \
-    --secret PRIVATE_KEY=+secrets/earthly-technologies/intellij-plugin/private.pem \
-    --secret PRIVATE_KEY_PASSWORD=+secrets/earthly-technologies/intellij-plugin/private-key-password \
-    --secret PUBLISH_TOKEN=+secrets/earthly-technologies/intellij-plugin/marketplace-token \
-      DO gradle+RUN_WITH_CACHE --command="gradle --no-daemon publishPlugin"
+    $EARTHLY_GRADLE_MOUNT_CACHE \
+    --secret CERTIFICATE_CHAIN=intellij-plugin/chain.crt \
+    --secret PRIVATE_KEY=intellij-plugin/private.pem \
+    --secret PRIVATE_KEY_PASSWORD=intellij-plugin/private-key-password \
+    --secret PUBLISH_TOKEN=intellij-plugin/marketplace-token \
+    gradle --no-daemon publishPlugin
 
 ide:
   LOCALLY
