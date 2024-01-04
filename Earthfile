@@ -11,7 +11,7 @@ GET_BUNDLE:
   RUN scripts/bundle.sh build/earthfile-syntax-highlighting
 
 install:
-  RUN echo "aaa2"
+  RUN echo "aaa3"
   RUN apt-get update && apt-get install -y \
     zip \
     && rm -rf /var/lib/apt/lists/*
