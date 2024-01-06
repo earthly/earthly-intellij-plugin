@@ -13,7 +13,7 @@ jobs:
       EARTHLY_INSTALL_ID: "earthly-lib-githubactions"
     steps:
       - uses: actions/checkout@v2
-      - uses: earthly/actions/setup-earthly@v1
+#      - uses: earthly/actions/setup-earthly@v1
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
