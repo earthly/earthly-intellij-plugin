@@ -5,6 +5,7 @@ ARG --global gradle_version=8.2.1
 ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 FROM gradle:${gradle_version}-jdk17
 
+
 GET_BUNDLE:
   FUNCTION
   COPY $bundle build/
