@@ -10,6 +10,7 @@ GET_BUNDLE:
   COPY $bundle build/
   RUN scripts/bundle.sh build/earthfile-syntax-highlighting
 
+
 install:
   RUN echo "aaa6"
   RUN apt-get update && apt-get install -y \
