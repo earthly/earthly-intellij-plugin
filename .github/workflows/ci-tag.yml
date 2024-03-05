@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 jobs:
   job-1:
-    runs-on: [earthly-satellite/nacho-sat-1, earthly-cache-folder:/root/.m2]
+    runs-on: [earthly@nacho-sat-1, cache/root/.m2]
     env:
       FORCE_COLOR: 1
       EARTHLY_CONVERSION_PARALLELISM: "5"
