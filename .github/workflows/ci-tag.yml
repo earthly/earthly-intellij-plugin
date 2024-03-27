@@ -23,7 +23,7 @@ jobs:
           earthly --org earthly-technologies +dist --version=7.7.7
 
   job-2:
-    runs-on: [earthly-satellite#nacho-fedora2]
+    runs-on: [earthly-satellite#nacho-fedora2, earthly-cache-folder#/root/.m2]
     env:
       FORCE_COLOR: 1
       EARTHLY_CONVERSION_PARALLELISM: "5"
@@ -37,5 +37,5 @@ jobs:
       - name: Release
         run: |-
           ls / && \
-          env 
+          env
         
