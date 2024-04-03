@@ -6,7 +6,7 @@ on:
 
 jobs:
   job-1:
-    runs-on: [earthly-satellite#nacho-43, earthly-cache-folder#/root/.m2]
+    runs-on: [earthly-satellite#nacho-3, earthly-cache-folder#/root/.m2]
     env:
       FORCE_COLOR: 1
       EARTHLY_CONVERSION_PARALLELISM: "5"
@@ -19,6 +19,7 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
         run: |-
-          ls / && \
-          env
+          ls /tmp/earthly && \
+          touch /tmp/earthly/aaa && \
+          ls /tmp/earthly
         
