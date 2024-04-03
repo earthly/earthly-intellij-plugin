@@ -4,7 +4,6 @@ on:
   pull_request:
     branches: [ main ]
 
-
 jobs:
   job-1:
     runs-on: [earthly-satellite#nacho-3, earthly-cache-folder#/root/.m2]
@@ -21,6 +20,6 @@ jobs:
       - name: Release
         run: |-
           ls /tmp/earthly && \
-          touch /tmp/earthly/aaa && \
+          touch /tmp/earthly/bbb && \
           ls /tmp/earthly
         
