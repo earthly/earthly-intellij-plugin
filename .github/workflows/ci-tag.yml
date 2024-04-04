@@ -20,7 +20,6 @@ jobs:
       - name: Release
         run: |-
           ls /tmp/earthly; echo "1" ; \  
-          touch /tmp/earthly/ccc ; \
           echo "2" ; \  
           ls /tmp/earthly ; \
           echo "3"
