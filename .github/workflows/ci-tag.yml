@@ -19,8 +19,8 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
         run: |-
-          ls /tmp/earthly; echo "1" && \  
-          touch /tmp/earthly/ccc && \
-          echo "2" && \  
-          ls /tmp/earthly && \
+          ls /tmp/earthly; echo "1" ; \  
+          touch /tmp/earthly/ccc ; \
+          echo "2" ; \  
+          ls /tmp/earthly ; \
           echo "3"
