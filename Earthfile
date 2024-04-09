@@ -19,6 +19,10 @@ install:
   # Sets $EARTHLY_GRADLE_USER_HOME_CACHE and $EARTHLY_GRADLE_PROJECT_CACHE
   DO gradle+GRADLE_GET_MOUNT_CACHE
 
+aaa:
+  FROM gradle:${gradle_version}-jdk17
+  RUN echo "aaa"
+
 src:
   FROM +install
   COPY src src
