@@ -21,7 +21,8 @@ install:
 
 aaa:
   FROM gradle:${gradle_version}-jdk17
-  RUN echo "aaa"
+  RUN echo "aaa">/tmp/aaa.txt
+  SAVE IMAGE test-aaa
 
 src:
   FROM +install
