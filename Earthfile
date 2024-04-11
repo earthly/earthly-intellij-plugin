@@ -15,6 +15,7 @@ install:
     zip \
     && rm -rf /var/lib/apt/lists/*
   COPY settings.gradle.kts build.gradle.kts ./
+  RUN echo "aaaa2"
   # Sets $EARTHLY_GRADLE_USER_HOME_CACHE and $EARTHLY_GRADLE_PROJECT_CACHE
   DO gradle+GRADLE_GET_MOUNT_CACHE
 
