@@ -19,4 +19,4 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
         run: |-
-          ls; earthly +aaa; docker images
+          earthly +install
