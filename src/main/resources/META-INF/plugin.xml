@@ -25,8 +25,7 @@
   <change-notes><![CDATA[
 <h2>New Features</h2>
 <ul>
-  <li>Add support for platform build 233</li>
-  <li>Add highlighting for FUNCTION, fix ELSE IF</li>
+  <li>Add support for platform build 241.* by Roberto Villarreal <rrjjvv@yahoo.com></li>
 </ul>
 ]]>
   </change-notes>
