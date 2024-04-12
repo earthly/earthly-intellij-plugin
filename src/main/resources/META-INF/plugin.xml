@@ -22,6 +22,7 @@
     Source code hosted on <a href="https://github.com/earthly/earthly-intellij-plugin">GitHub</a>.
   ]]></description>
 
+
   <change-notes><![CDATA[
 <h2>New Features</h2>
 <ul>
