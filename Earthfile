@@ -3,7 +3,7 @@ PROJECT earthly-technologies/core
 IMPORT github.com/earthly/lib/gradle:0a891b93330eced8fe57f48397a1109d829cb7d4 AS gradle
 ARG --global gradle_version=8.2.1
 ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
-FROM gradle:${gradle_version}-jdk17
+#FROM gradle:${gradle_version}-jdk17
 
 GET_BUNDLE:
   FUNCTION
@@ -65,6 +65,7 @@ generate-gradle-wrapper:
 
 # ide opens an IntelliJ IDE with the plugin installed. Requires ./gradlew (see +generate-gradle-wrapper)
 ide:
+    FROM alpine
   LOCALLY
   DO +GET_BUNDLE
   RUN ./gradlew runIde

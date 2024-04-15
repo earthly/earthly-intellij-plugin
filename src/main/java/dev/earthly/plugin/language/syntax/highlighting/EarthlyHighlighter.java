@@ -35,6 +35,7 @@ public class EarthlyHighlighter extends SyntaxHighlighterBase {
     COLOR_MAP.put("constant.numeric-port.earthfile", EXPOSE_PORT);
     COLOR_MAP.put("entity.name.class.target.earthfile", TARGET);
     COLOR_MAP.put("entity.name.function.user-command.earthfile", TARGET_REF);
+    COLOR_MAP.put("entity.name.function.function.earthfile", TARGET_REF);
     COLOR_MAP.put("entity.name.type.base-image.earthfile", TARGET_REF);
     COLOR_MAP.put("entity.name.type.target.earthfile", TARGET_REF);
     COLOR_MAP.put("entity.name.variable.artifact.earthfile", TARGET_REF);
