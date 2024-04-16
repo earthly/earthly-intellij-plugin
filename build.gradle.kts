@@ -5,8 +5,7 @@ plugins {
 
 dependencies {
     implementation("org.apache.commons:commons-collections4:4.4")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("junit:junit:4.13.2")
 }
 
 sourceSets["main"].java.srcDirs("src/main/gen")
@@ -20,7 +19,7 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version.set("2021.2")
+    version.set("2022.2")
     type.set("IU") // Target IDE Platform
     plugins.set(listOf("org.jetbrains.plugins.textmate"))
 }
@@ -29,12 +28,12 @@ intellij {
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 
     patchPluginXml {
-        sinceBuild.set("212")
+        sinceBuild.set("222")
         untilBuild.set("241.*")
     }
 
@@ -49,7 +48,6 @@ tasks {
     }
 
     test {
-        useJUnitPlatform()
-        include("dev/earthly/plugin/lexer/**")
+        useJUnit()
     }
 }

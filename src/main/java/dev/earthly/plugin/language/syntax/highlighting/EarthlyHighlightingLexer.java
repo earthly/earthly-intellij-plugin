@@ -67,9 +67,16 @@ public class EarthlyHighlightingLexer extends TextMateHighlightingLexer {
 
   private static File getBundlePath() {
     try {
-      IdeaPluginDescriptor plugin = PluginManagerCore.getPlugin(PluginId.getId("dev.earthly.earthly-intellij-plugin"));
-      String version = plugin.getVersion();
-      File bundleDirectory = new File(plugin.getPluginPath() + "/bundles/" + version);
+        String tempDir = System.getProperty("earthly.test_dir");
+        File bundleDirectory;
+        if (tempDir != null) {
+            bundleDirectory = new File(tempDir, "bundle");
+        } else {
+            PluginId id = PluginId.getId("dev.earthly.earthly-intellij-plugin");
+            IdeaPluginDescriptor plugin = PluginManagerCore.getPlugin(id);
+            String version = plugin.getVersion();
+            bundleDirectory = new File(plugin.getPluginPath() + "/bundles/" + version);
+        }
       if (!bundleDirectory.exists()) {
         deleteFile(bundleDirectory.getParentFile());
         bundleDirectory.mkdirs();

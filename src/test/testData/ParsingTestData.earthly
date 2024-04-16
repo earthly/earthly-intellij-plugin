@@ -1,0 +1,9 @@
+VERSION 0.8
+
+# Comment
+INSTALL_DIND:
+    COMMAND
+    DO ./utils/dind+INSTALL
+
+test:
+    BUILD ./utils+test

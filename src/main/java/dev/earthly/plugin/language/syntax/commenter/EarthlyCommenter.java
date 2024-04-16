@@ -7,19 +7,18 @@ final class EarthlyCommenter implements Commenter {
 
     @Override
     public String getLineCommentPrefix() {
-        System.out.println("Biore line preffix");
         return "#";
     }
 
     @Override
     public String getBlockCommentPrefix() {
-        return "/*1*";
+        return null;
     }
 
     @Nullable
     @Override
     public String getBlockCommentSuffix() {
-        return "*2*/";
+        return null;
     }
 
     @Nullable

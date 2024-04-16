@@ -53,7 +53,7 @@ public class EarthlyLexerDataStorage extends ShortBasedStorage {
 
   @Override
   public IElementType unpackTokenFromData(int data) {
-    return data != 0 ? tokenTypes.get(Math.abs(data) - 1) : EarthlyTokenSets.mapToType(TextMateScope.EMPTY);
+    return data != 0 ? tokenTypes.get(Math.abs(data) - 1) : EarthlyTokenSets.EMPTY;
   }
 
   @Override
