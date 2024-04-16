@@ -1,0 +1,15 @@
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: 1
+      EARTHLY_CONVERSION_PARALLELISM: "5"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: earthly/actions/setup-earthly@v1
+      - name: test
+        run: earthly test
