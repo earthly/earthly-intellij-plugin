@@ -4,7 +4,6 @@ on:
   pull_request:
     branches: [ main ]
 
-
 jobs:
   job-1:
     runs-on: [earthly-satellite#nacho-gha-1, earthly-cache-folder#/root/.m2]
@@ -20,4 +19,4 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
         run: |-
-          env; earthly +install
+         earthly +install
