@@ -2,7 +2,7 @@ Earthly
   PsiElement(source.earthfile keyword.other.special-method.earthfile)('VERSION ')
   PsiElement(source.earthfile)('0.8\n')
   PsiElement(source.earthfile)('\n')
-  PsiElement(source.earthfile comment.line.number-sign.earthfile punctuation.definition.comment.earthfile)('#')
+  PsiComment(source.earthfile comment.line.number-sign.earthfile punctuation.definition.comment.earthfile)('#')
   PsiComment(source.earthfile comment.line.number-sign.earthfile)(' Comment\n')
   PsiElement(source.earthfile entity.name.function.function.earthfile)('INSTALL_DIND')
   PsiElement(source.earthfile)(':\n')

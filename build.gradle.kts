@@ -8,8 +8,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-sourceSets["main"].java.srcDirs("src/main/gen")
-
 group = "dev.earthly"
 version = "0.0.0"
 
@@ -19,7 +17,7 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version.set("2022.2")
+    version.set("2023.2.6")
     type.set("IU") // Target IDE Platform
     plugins.set(listOf("org.jetbrains.plugins.textmate"))
 }
@@ -33,7 +31,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("222")
+        sinceBuild.set("232")
         untilBuild.set("241.*")
     }
 

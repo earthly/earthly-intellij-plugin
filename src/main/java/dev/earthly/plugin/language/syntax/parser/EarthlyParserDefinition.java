@@ -55,7 +55,7 @@ public class EarthlyParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return new EarthlyPsiElement(node.getElementType());
+        return EarthlyTokenSets.Factory.createElement(node);
     }
 
     @Override

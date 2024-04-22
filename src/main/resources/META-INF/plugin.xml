@@ -55,6 +55,9 @@
     <editorHighlighterProvider filetype="Earthfile" implementationClass="dev.earthly.plugin.language.syntax.highlighting.EarthlyEditorHighlighterProvider"/>
     <lang.parserDefinition language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.parser.EarthlyParserDefinition"/>
     <lang.commenter language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.commenter.EarthlyCommenter"/>
-    <spellchecker.support language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.spellchecker.EarthlySpellingStrategy"/>
+<!--    <codeInsight.lineMarkerProvider language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.EarthlyLineMarkerProvider"/>-->
+    <psi.referenceContributor language="Earthly"
+                              implementation="dev.earthly.plugin.language.syntax.EarthlyReferenceContributor"/>
+
   </extensions>
 </idea-plugin>

@@ -2,7 +2,8 @@ VERSION --pass-args --global-cache --use-function-keyword 0.7
 PROJECT earthly-technologies/core
 IMPORT github.com/earthly/lib/gradle:0a891b93330eced8fe57f48397a1109d829cb7d4 AS gradle
 ARG --global gradle_version=8.2.1
-ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
+ARG --global bundle="../earthfile-grammar+export/"
+#ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 FROM gradle:${gradle_version}-jdk17
 
 GET_BUNDLE:

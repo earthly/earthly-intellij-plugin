@@ -2,8 +2,12 @@ VERSION 0.8
 
 # Comment
 INSTALL_DIND:
-    COMMAND
+    FUNCTION
     DO ./utils/dind+INSTALL
 
+dep:
+    FROM alpine
+
 test:
-    BUILD ./utils+test
+    FROM +dep
+    DO +INSTALL_DIND
