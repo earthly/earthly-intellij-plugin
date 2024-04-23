@@ -25,8 +25,7 @@ public class EarthlyUtil {
      * @param element to check
      * @return matching functions
      */
-    public static List<PsiElement> findFunctions(Project project, EarthlyPsiElement element) {
-        String key = element.getText();
+    public static List<PsiElement> findAllFunctions(Project project, EarthlyPsiElement element) {
         Class<? extends EarthlyPsiElement> lookFor = getLookFor(element);
         List<PsiElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =
@@ -35,14 +34,15 @@ public class EarthlyUtil {
             EarthlyFile file = (EarthlyFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (file != null) {
                 List<PsiElement> functions = PsiTreeUtil.getChildrenOfTypeAsList(file, lookFor);
-                for (PsiElement fun : functions) {
-                    if (fun.getText().equals(key)) {
-                        result.add(fun);
-                    }
-                }
+                result.addAll(functions);
             }
         }
         return result;
+    }
+
+    public static List<PsiElement> findFunctionsByName(Project project, EarthlyPsiElement element) {
+        String key = element.getText();
+        return findAllFunctions(project, element).stream().filter(e -> e.getText().equals(key)).toList();
     }
 
     @NotNull
@@ -50,7 +50,7 @@ public class EarthlyUtil {
         if (element instanceof EarthlyFunctionPsiElement) {
             return EarthlyFunctionCallPsiElement.class;
         } else if (element instanceof EarthlyFunctionCallPsiElement) {
-                return EarthlyFunctionPsiElement.class;
+            return EarthlyFunctionPsiElement.class;
         } else if (element instanceof EarthlyTargetPsiElement) {
             return EarthlyTargetCallPsiElement.class;
         } else {

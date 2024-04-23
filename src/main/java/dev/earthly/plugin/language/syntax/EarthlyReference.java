@@ -22,7 +22,7 @@ final class EarthlyReference extends PsiReferenceBase<EarthlyPsiElement> impleme
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
         Project project = myElement.getProject();
-        final List<PsiElement> properties = EarthlyUtil.findFunctions(project, myElement);
+        final List<PsiElement> properties = EarthlyUtil.findFunctionsByName(project, myElement);
         List<ResolveResult> results = new ArrayList<>();
         for (PsiElement property : properties) {
             if (property != myElement)
@@ -41,7 +41,7 @@ final class EarthlyReference extends PsiReferenceBase<EarthlyPsiElement> impleme
     @Override
     public Object @NotNull [] getVariants() {
         Project project = myElement.getProject();
-        final List<PsiElement> properties = EarthlyUtil.findFunctions(project, myElement);
+        final List<PsiElement> properties = EarthlyUtil.findFunctionsByName(project, myElement);
         List<LookupElement> variants = new ArrayList<>();
         for (final PsiElement property : properties) {
             if (property != myElement) {

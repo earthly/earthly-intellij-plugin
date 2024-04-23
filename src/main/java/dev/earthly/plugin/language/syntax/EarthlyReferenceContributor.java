@@ -12,12 +12,10 @@ final class EarthlyReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
         registrar.registerReferenceProvider(psiElement(EarthlyPsiElement.class),
-//        registrar.registerReferenceProvider(PlatformPatterns.or(psiElement(EarthlyGenericPsiElement.class), psiElement(EarthlyFunctionCallPsiElement.class)),
                 new PsiReferenceProvider() {
                     @Override
                     public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element,
                                                                            @NotNull ProcessingContext context) {
-                        System.out.println("Trying to find reference for " + element + " context " + context);
                         return new PsiReference[]{new EarthlyReference((EarthlyPsiElement) element)};
                     }
                 });

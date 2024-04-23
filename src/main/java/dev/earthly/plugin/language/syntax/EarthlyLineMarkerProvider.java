@@ -25,7 +25,7 @@ final class EarthlyLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
         Project project = element.getProject();
         String possibleProperties = element.getText();
-        final List<PsiElement> functions = EarthlyUtil.findFunctions(project, eapsi);
+        final List<PsiElement> functions = EarthlyUtil.findFunctionsByName(project, eapsi);
         System.out.println("Have " + possibleProperties + " --> " + functions);
 
         if (!functions.isEmpty()) {
