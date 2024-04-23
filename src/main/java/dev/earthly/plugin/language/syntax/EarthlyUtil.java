@@ -8,9 +8,7 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import dev.earthly.plugin.language.syntax.parser.EarthlyFile;
-import dev.earthly.plugin.language.syntax.psi.EarthlyFunctionCallPsiElement;
-import dev.earthly.plugin.language.syntax.psi.EarthlyFunctionPsiElement;
-import dev.earthly.plugin.language.syntax.psi.EarthlyPsiElement;
+import dev.earthly.plugin.language.syntax.psi.*;
 import dev.earthly.plugin.metadata.EarthlyFileType;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,8 +49,12 @@ public class EarthlyUtil {
     private static Class<? extends EarthlyPsiElement> getLookFor(EarthlyPsiElement element) {
         if (element instanceof EarthlyFunctionPsiElement) {
             return EarthlyFunctionCallPsiElement.class;
+        } else if (element instanceof EarthlyFunctionCallPsiElement) {
+                return EarthlyFunctionPsiElement.class;
+        } else if (element instanceof EarthlyTargetPsiElement) {
+            return EarthlyTargetCallPsiElement.class;
         } else {
-            return EarthlyFunctionPsiElement.class;
+            return EarthlyTargetPsiElement.class;
         }
     }
 }

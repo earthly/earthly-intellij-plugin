@@ -28,14 +28,12 @@ final class EarthlyReference extends PsiReferenceBase<EarthlyPsiElement> impleme
             if (property != myElement)
                 results.add(new PsiElementResolveResult(property));
         }
-        System.out.println("multi resolve: key = [" + myElement.getText() + "] ->> " + results);
         return results.toArray(new ResolveResult[0]);
     }
 
     @Nullable
     @Override
     public PsiElement resolve() {
-        System.out.println("resolve");
         ResolveResult[] resolveResults = multiResolve(false);
         return resolveResults.length == 1 ? resolveResults[0].getElement() : null;
     }
@@ -46,15 +44,13 @@ final class EarthlyReference extends PsiReferenceBase<EarthlyPsiElement> impleme
         final List<PsiElement> properties = EarthlyUtil.findFunctions(project, myElement);
         List<LookupElement> variants = new ArrayList<>();
         for (final PsiElement property : properties) {
-//            if (property.getKey() != null && !property.getKey().isEmpty()) {
+            if (property != myElement) {
                 variants.add(LookupElementBuilder
                         .create(property).withIcon(EarthlyIcons.FILE)
                         .withTypeText(property.getContainingFile().getName())
                 );
-//            }
+            }
         }
-        System.out.println("Getting variants: " + variants);
         return variants.toArray();
     }
-
 }
