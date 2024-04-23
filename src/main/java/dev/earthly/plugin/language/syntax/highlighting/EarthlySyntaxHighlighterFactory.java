@@ -11,7 +11,6 @@ public class EarthlySyntaxHighlighterFactory extends SyntaxHighlighterFactory {
   @NotNull
   @Override
   public SyntaxHighlighter getSyntaxHighlighter(Project project, VirtualFile virtualFile) {
-    EarthlyHighlightingLexer lexer = new EarthlyHighlightingLexer();
-    return new EarthlyHighlighter(lexer);
+    return new EarthlyHighlighter();
   }
 }

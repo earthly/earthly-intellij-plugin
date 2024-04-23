@@ -1,10 +1,13 @@
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.17.3"
+    id("antlr")
 }
 
 dependencies {
+    antlr("org.antlr:antlr4:4.10.1")
     implementation("org.apache.commons:commons-collections4:4.4")
+    implementation("org.antlr:antlr4-intellij-adaptor:0.1")
     testImplementation("junit:junit:4.13.2")
 }
 
@@ -21,7 +24,6 @@ intellij {
     type.set("IU") // Target IDE Platform
     plugins.set(listOf("org.jetbrains.plugins.textmate"))
 }
-
 
 tasks {
     // Set the JVM compatibility versions
@@ -43,6 +45,12 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+
+    generateGrammarSource {
+        arguments = arguments + listOf("-visitor", "-package", "dev.earthly.plugin.language.syntax.parser")
+        outputDirectory = layout.buildDirectory.dir("generated-src/antlr/main/dev/earthly/plugin/language/syntax/parser").get().asFile
+        maxHeapSize = "64m"
     }
 
     test {

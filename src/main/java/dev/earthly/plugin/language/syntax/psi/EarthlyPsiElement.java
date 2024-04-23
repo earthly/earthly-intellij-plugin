@@ -9,10 +9,11 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceService;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.util.IncorrectOperationException;
+import org.antlr.intellij.adaptor.psi.ANTLRPsiNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EarthlyPsiElement extends ASTWrapperPsiElement implements PsiNameIdentifierOwner {
+public class EarthlyPsiElement extends ANTLRPsiNode implements PsiNameIdentifierOwner {
     public EarthlyPsiElement(ASTNode node) {
         super(node);
     }

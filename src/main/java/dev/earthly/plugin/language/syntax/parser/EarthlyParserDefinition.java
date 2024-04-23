@@ -8,11 +8,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import dev.earthly.plugin.language.syntax.highlighting.EarthlyHighlightingLexer;
 import dev.earthly.plugin.language.syntax.highlighting.EarthlyTokenSets;
 import dev.earthly.plugin.metadata.EarthlyLanguage;
+import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor;
+import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.jetbrains.annotations.NotNull;
 
 public class EarthlyParserDefinition implements ParserDefinition {
@@ -21,12 +25,24 @@ public class EarthlyParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new EarthlyHighlightingLexer();
+        return new EarthlyANTLRLexerAdaptor();
     }
 
     @Override
     public @NotNull PsiParser createParser(Project project) {
-        return new EarthlyParser();
+        final EarthParser parser = new EarthParser(null);
+        return new ANTLRParserAdaptor(EarthlyLanguage.INSTANCE, parser) {
+            @Override
+            protected ParseTree parse(Parser parser, IElementType root) {
+                // start rule depends on root passed in; sometimes we want to create an ID node etc...
+                if (root instanceof IFileElementType) {
+                    return ((EarthParser) parser).earthFile();
+                }
+                // let's hope it's an ID as needed by "rename function"
+                return ((EarthParser) parser).earthFile();
+            }
+        };
+//        return new EarthlyParser();
     }
 
     @Override
@@ -37,7 +53,8 @@ public class EarthlyParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return TokenSet.WHITE_SPACE;
+        return TokenSet.EMPTY;
+//        return EarthlyTokenSets.WHITESPACE;
     }
 
     @NotNull
@@ -50,6 +67,7 @@ public class EarthlyParserDefinition implements ParserDefinition {
     @Override
     public TokenSet getStringLiteralElements() {
         return TokenSet.EMPTY;
+//        return EarthlyTokenSets.STRING;
     }
 
     @NotNull
