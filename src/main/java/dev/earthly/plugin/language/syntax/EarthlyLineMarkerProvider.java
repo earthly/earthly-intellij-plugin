@@ -5,9 +5,6 @@ import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import dev.earthly.plugin.language.syntax.highlighting.EarthlyTokenSets;
-import dev.earthly.plugin.language.syntax.lexer.EarthlyElementType;
-import dev.earthly.plugin.language.syntax.psi.EarthlyFunctionPsiElement;
 import dev.earthly.plugin.language.syntax.psi.EarthlyPsiElement;
 import dev.earthly.plugin.metadata.EarthlyIcons;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +18,7 @@ final class EarthlyLineMarkerProvider extends RelatedItemLineMarkerProvider {
     protected void collectNavigationMarkers(@NotNull PsiElement element,
                                             @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         System.out.println("In marker: " + element);
-        if (!(element instanceof EarthlyFunctionPsiElement eapsi)) {
+        if (!(element instanceof EarthlyPsiElement eapsi)) {
             return;
         }
         System.out.println("Have " + eapsi);

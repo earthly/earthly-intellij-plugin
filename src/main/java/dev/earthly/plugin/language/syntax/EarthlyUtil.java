@@ -1,10 +1,9 @@
 package dev.earthly.plugin.language.syntax;
 
-import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -15,7 +14,9 @@ import dev.earthly.plugin.language.syntax.psi.EarthlyPsiElement;
 import dev.earthly.plugin.metadata.EarthlyFileType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class EarthlyUtil {
 
@@ -28,7 +29,7 @@ public class EarthlyUtil {
      */
     public static List<PsiElement> findFunctions(Project project, EarthlyPsiElement element) {
         String key = element.getText();
-        Class<? extends EarthlyPsiElement> lookFor = element instanceof EarthlyFunctionPsiElement ? EarthlyFunctionCallPsiElement.class : EarthlyFunctionPsiElement.class;
+        Class<? extends EarthlyPsiElement> lookFor = getLookFor(element);
         List<PsiElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(EarthlyFileType.INSTANCE, GlobalSearchScope.allScope(project));
@@ -44,5 +45,14 @@ public class EarthlyUtil {
             }
         }
         return result;
+    }
+
+    @NotNull
+    private static Class<? extends EarthlyPsiElement> getLookFor(EarthlyPsiElement element) {
+        if (element instanceof EarthlyFunctionPsiElement) {
+            return EarthlyFunctionCallPsiElement.class;
+        } else {
+            return EarthlyFunctionPsiElement.class;
+        }
     }
 }

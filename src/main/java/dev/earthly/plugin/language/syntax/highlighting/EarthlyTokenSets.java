@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import dev.earthly.plugin.language.syntax.lexer.EarthlyElementType;
-import dev.earthly.plugin.language.syntax.psi.EarthlyCommentPsiElement;
 import dev.earthly.plugin.language.syntax.psi.EarthlyFunctionCallPsiElement;
 import dev.earthly.plugin.language.syntax.psi.EarthlyFunctionPsiElement;
 import dev.earthly.plugin.language.syntax.psi.EarthlyPsiElement;
@@ -55,16 +54,13 @@ public class EarthlyTokenSets {
     public static class Factory {
         public static EarthlyPsiElement createElement(ASTNode node) {
             IElementType type = node.getElementType();
-            if (COMMENTS.contains(type)) {
-                return new EarthlyCommentPsiElement(node);
-            }
             if (type.equals(FUNCTION)) {
                 return new EarthlyFunctionPsiElement(node);
-            }
-            if (type.equals(FUNCTION_CALL)) {
+            } else if (type.equals(FUNCTION_CALL)) {
                 return new EarthlyFunctionCallPsiElement(node);
             }
-            return new EarthlyPsiElement(node);
+            // Handle unknown type
+            throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
 }
