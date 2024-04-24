@@ -20,5 +20,4 @@ final class EarthlyReferenceContributor extends PsiReferenceContributor {
                     }
                 });
     }
-
 }

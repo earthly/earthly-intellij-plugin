@@ -17,19 +17,14 @@ final class EarthlyLineMarkerProvider extends RelatedItemLineMarkerProvider {
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element,
                                             @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        System.out.println("In marker: " + element);
         if (!(element instanceof EarthlyPsiElement eapsi)) {
             return;
         }
-        System.out.println("Have " + eapsi);
 
         Project project = element.getProject();
-        String possibleProperties = element.getText();
         final List<PsiElement> functions = EarthlyUtil.findFunctionsByName(project, eapsi);
-        System.out.println("Have " + possibleProperties + " --> " + functions);
 
         if (!functions.isEmpty()) {
-//             Add the property to a collection of line marker info
             NavigationGutterIconBuilder<PsiElement> builder =
                     NavigationGutterIconBuilder.create(EarthlyIcons.FILE)
                             .setTargets(functions)
@@ -37,5 +32,4 @@ final class EarthlyLineMarkerProvider extends RelatedItemLineMarkerProvider {
             result.add(builder.createLineMarkerInfo(element));
         }
     }
-
 }

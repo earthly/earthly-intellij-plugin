@@ -45,7 +45,6 @@ public class EarthlyTokenSets {
         }
 
         EarthlyElementType ret = new EarthlyElementType(scope);
-//        System.out.println("Putting into cache " + scope.toString());
         cache.put(scope.toString(), ret);
         return ret;
     }
@@ -63,7 +62,6 @@ public class EarthlyTokenSets {
                 return new EarthlyTargetCallPsiElement(node);
             } else if (type.equals(BASE_CALL)) {
                 return new EarthlyTargetCallPsiElement(node);            }
-            // Handle unknown type
             throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
