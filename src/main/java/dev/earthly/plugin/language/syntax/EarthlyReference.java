@@ -5,6 +5,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
+import com.intellij.util.IncorrectOperationException;
 import dev.earthly.plugin.language.syntax.psi.EarthlyPsiElement;
 import dev.earthly.plugin.metadata.EarthlyIcons;
 import org.jetbrains.annotations.NotNull;
@@ -52,5 +53,10 @@ final class EarthlyReference extends PsiReferenceBase<EarthlyPsiElement> impleme
             }
         }
         return variants.toArray();
+    }
+
+    @Override
+    public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
+        return myElement.setName(newElementName);
     }
 }

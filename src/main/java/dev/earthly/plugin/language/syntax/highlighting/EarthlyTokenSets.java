@@ -28,6 +28,7 @@ public class EarthlyTokenSets {
     public final static EarthlyElementType INDENT = createMain("constant.indent.earthfile");
 
     public final static TokenSet COMMENTS = TokenSet.create(COMMENT1, COMMENT2, COMMENT_PUNCTUATION);
+    public final static TokenSet IDENTIFIERS = TokenSet.create(FUNCTION, FUNCTION_CALL,TARGET, TARGET_CALL, BASE_CALL);
 
     public static EarthlyElementType createMain(String... names) {
         TextMateScope add = ROOT_SCOPE;
