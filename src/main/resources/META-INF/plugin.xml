@@ -60,6 +60,7 @@
 <!--    <codeInsight.lineMarkerProvider language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.EarthlyLineMarkerProvider"/>-->
     <psi.referenceContributor language="Earthly" implementation="dev.earthly.plugin.language.syntax.EarthlyReferenceContributor"/>
     <completion.contributor language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.EarthlyCompletionContributor"/>
+    <lang.namesValidator language="Earthly" implementationClass="dev.earthly.plugin.language.syntax.EarthlyNamesValidator"/>
 
   </extensions>
 </idea-plugin>
