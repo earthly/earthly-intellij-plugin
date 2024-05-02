@@ -10,9 +10,6 @@ jobs:
     runs-on: [earthly-satellite#intellij-plugin3, earthly-cache-folder#/root/cache]
     env:
       FORCE_COLOR: 1
-      EARTHLY_CONVERSION_PARALLELISM: "5"
-      EARTHLY_TOKEN: "${{ secrets.EARTHLY_TOKEN }}"
-      EARTHLY_INSTALL_ID: "earthly-lib-githubactions"
     steps:
       - uses: actions/checkout@v2
       #      - uses: earthly/actions/setup-earthly@v1
