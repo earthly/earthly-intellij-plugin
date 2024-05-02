@@ -4,7 +4,6 @@ on:
   pull_request:
     branches: [ main ]
 
-
 jobs:
   job-1:
     runs-on: [earthly-satellite#nacho-test, earthly-cache-folder#/root/cache]
