@@ -1,0 +1,322 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Earthfile",
+	"fileTypes": [
+		"Earthfile"
+	],
+	"patterns": [
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#constant"
+		},
+		{
+			"include": "#entity"
+		},
+		{
+			"include": "#keyword"
+		},
+		{
+			"include": "#string"
+		},
+		{
+			"include": "#variable"
+		},
+		{
+			"include": "#target"
+		},
+		{
+			"include": "#function"
+		}
+	],
+	"scopeName": "source.earthfile",
+	"repository": {
+		"comment": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.whitespace.comment.leading.earthfile"
+						},
+						"2": {
+							"name": "comment.line.number-sign.earthfile"
+						},
+						"3": {
+							"name": "punctuation.definition.comment.earthfile"
+						}
+					},
+					"comment": "comment.line",
+					"match": "^(\\s*)((#).*$)"
+				},
+				{
+					"name": "comment.line.earthfile",
+					"match": "(\\s+)((#).*$)"
+				},
+				{
+					"captures": {
+						"2": {
+							"name": "comment.line.number-sign.earthfile"
+						}
+					},
+					"match": "([\\\\\\s]+)((#).*$)"
+				}
+			]
+		},
+		"constant": {
+			"patterns": [
+				{
+					"match": "\\\\.",
+					"name": "constant.character.escape.earthfile"
+				},
+				{
+					"match": "\\\\$",
+					"name": "constant.character.escape.earthfile"
+				},
+				{
+					"match": "(?<=EXPOSE\\s)(\\d+)",
+					"name": "constant.numeric.earthfile"
+				},
+				{
+					"match": "[\r\n]",
+					"name": "constant.eol.earthfile"
+				},
+				{
+					"match": "^\\s+",
+					"name": "constant.indent.earthfile"
+				}
+			]
+		},
+		"keyword": {
+			"patterns": [
+				{
+					"name": "keyword.operator.shell.earthfile",
+					"match": "((&&)|(>>)|(<<)|[|;>])"
+				},
+				{
+					"name": "keyword.operator.assignment.earthfile",
+					"match": "([=])"
+				},
+				{
+					"name": "keyword.operator.flag.earthfile",
+					"match": "(\\B(-)+[a-zA-Z0-9\\-_]+)"
+				},
+				{
+					"include": "#special-method"
+				},
+				{
+					"include": "#target"
+				},
+				{
+					"include": "#function"
+				}
+			]
+		},
+		"target": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "entity.name.class.target.earthfile"
+						},
+						"3": {
+							"name": "entity.name.class.target-dots.earthfile"
+						}
+					},
+					"match": "^([a-z]([a-zA-Z0-9.]|-)*)(:)"
+				}
+			]
+		},
+		"function": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "entity.name.function.function.earthfile"
+						},
+						"2": {
+							"name": "entity.name.function.function-dots.earthfile"
+						}
+					},
+					"match": "^([A-Z][a-zA-Z0-9._]*)(:)?"
+				}
+			]
+		},
+		"special-method": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.other.special-method.earthfile"
+						},
+						"2": {
+							"name": "entity.name.variable.target.earthfile"
+						},
+						"3": {
+							"name": "keyword.other.special-method.earthfile"
+						}
+					},
+					"match": "(SAVE ARTIFACT)(\\b.*?\\b)(AS LOCAL)\\b"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.other.special-method.earthfile"
+						},
+						"2": {
+							"name": "keyword.other.special-method.earthfile"
+						}
+					},
+					"match": "(FOR)\\b.*?\\b(IN)\\b"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.other.special-method.earthfile"
+						},
+						"3": {
+							"name": "entity.name.type.base-target.earthfile"
+						},
+						"4": {
+							"name": "entity.name.type.base-plus.earthfile"
+						},
+						"5": {
+							"name": "entity.name.type.base-name.earthfile"
+						},
+						"6": {
+							"name": "entity.name.type.base-image.earthfile"
+						}
+					},
+					"match": "(FROM)\\s*(([a-zA-Z0-9._\\-/:]*)(\\+)([a-z][a-zA-Z0-9.\\-]*)|([^\\s#]+))"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.other.special-method.earthfile"
+						}
+					},
+					"match": "(FROM|COPY|SAVE ARTIFACT|SAVE IMAGE|RUN|LABEL|EXPOSE|VOLUME|USER|ENV|ARG|BUILD|WORKDIR|ENTRYPOINT|CMD|GIT CLONE|DOCKER LOAD|DOCKER PULL|HEALTHCHECK|WITH DOCKER|END|IF|ELSE IF|ELSE|DO|COMMAND|FUNCTION|IMPORT|LOCALLY|FOR|VERSION|WAIT|TRY|FINALLY|CACHE|HOST|PIPELINE|TRIGGER|PROJECT|SET|LET|ADD|STOP SIGNAL|ONBUILD|SHELL)\\s"
+				},
+				{
+					"name": "keyword.other.special-method.earthfile",
+					"match": "HEALTHCHECK\\s+(NONE|CMD)\\s"
+				},
+				{
+					"name": "keyword.other.special-method.earthfile",
+					"match": "FROM DOCKERFILE\\s"
+				},
+				{
+					"name": "keyword.other.special-method.earthfile",
+					"match": "(FROM|COPY|SAVE ARTIFACT|SAVE IMAGE|RUN|LABEL|EXPOSE|VOLUME|USER|ENV|ARG|BUILD|WORKDIR|ENTRYPOINT|CMD|GIT CLONE|DOCKER LOAD|DOCKER PULL|HEALTHCHECK|WITH DOCKER|END|IF|ELSE IF|ELSE|DO|COMMAND|FUNCTION|IMPORT|LOCALLY|FOR|VERSION|WAIT|TRY|FINALLY|CACHE|HOST|PIPELINE|TRIGGER|PROJECT|SET|LET|ADD|STOP SIGNAL|ONBUILD|SHELL)(\\s|$)"
+				}
+			]
+		},
+		"string": {
+			"patterns": [
+				{
+					"begin": "\"",
+					"end": "\"",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.begin.earthfile"
+						}
+					},
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.earthfile"
+						}
+					},
+					"name": "string.quoted.double.earthfile",
+					"patterns": [
+						{
+							"match": "\\\\.",
+							"name": "constant.character.escaped.earthfile"
+						}
+					]
+				},
+				{
+					"begin": "'",
+					"end": "'",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.begin.earthfile"
+						}
+					},
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.earthfile"
+						}
+					},
+					"name": "string.quoted.single.earthfile",
+					"patterns": [
+						{
+							"match": "\\\\.",
+							"name": "constant.character.escaped.earthfile"
+						}
+					]
+				}
+			]
+		},
+		"variable": {
+			"patterns": [
+				{
+					"match": "\\$[a-zA-Z0-9_]+",
+					"name": "variable.other.earthfile"
+				},
+				{
+					"match": "(?<=\\${)([a-zA-Z0-9.\\-_]+)(?=})",
+					"name": "variable.other.earthfile"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.variable.begin.earthfile"
+						},
+						"2": {
+							"name": "variable.other.earthfile"
+						},
+						"3": {
+							"name": "punctuation.definition.variable.end.earthfile"
+						}
+					},
+					"match": "(\\${)([a-zA-Z0-9.\\-_#]+)(})"
+				}
+			]
+		},
+		"entity": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "entity.name.type.target-target.earthfile"
+						},
+						"2": {
+							"name": "entity.name.type.target-plus.earthfile"
+						},
+						"3": {
+							"name": "entity.name.type.target.earthfile"
+						},
+						"2": {
+							"name": "entity.name.type.target-file.earthfile"
+						}
+					},
+					"match": "([a-zA-Z0-9._\\-/:]*)(\\+)([a-z][a-zA-Z0-9.\\-]*)(/\\S*)+"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "entity.name.function.call-target.earthfile"
+						},
+						"2": {
+							"name": "entity.name.function.call-plus.earthfile"
+						},
+						"3": {
+							"name": "entity.name.function.call-name.earthfile"
+						}
+					},
+					"match": "([a-zA-Z0-9._\\-/:]*)(\\+)([A-Z][a-zA-Z0-9._]*)"
+				}
+			]
+		}
+	}
+}

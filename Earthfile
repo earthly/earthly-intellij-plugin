@@ -2,13 +2,7 @@ VERSION --pass-args --global-cache --use-function-keyword 0.7
 PROJECT earthly-technologies/core
 IMPORT github.com/earthly/lib/gradle:0a891b93330eced8fe57f48397a1109d829cb7d4 AS gradle
 ARG --global gradle_version=8.2.1
-ARG --global bundle="github.com/earthly/earthfile-grammar+export/"
 FROM gradle:${gradle_version}-jdk17
-
-GET_BUNDLE:
-  FUNCTION
-  COPY $bundle build/
-  RUN scripts/bundle.sh build/earthfile-syntax-highlighting
 
 install:
   RUN apt-get update && apt-get install -y \
@@ -21,8 +15,6 @@ install:
 src:
   FROM +install
   COPY src src
-  COPY scripts scripts
-  DO +GET_BUNDLE
   ARG --required version
   RUN sed -i 's^0.0.0^'"$version"'^g' ./build.gradle.kts
 
@@ -71,5 +63,4 @@ generate-gradle-wrapper:
 # ide opens an IntelliJ IDE with the plugin installed. Requires ./gradlew (see +generate-gradle-wrapper)
 ide:
   LOCALLY
-  DO +GET_BUNDLE
   RUN ./gradlew runIde
