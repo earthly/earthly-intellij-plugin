@@ -1,19 +1,7 @@
 package dev.earthly.plugin.language.syntax.highlighting;
 
-import com.intellij.ide.plugins.IdeaPluginDescriptor;
-import com.intellij.ide.plugins.PluginManagerCore;
-import com.intellij.openapi.extensions.PluginId;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.containers.Interner;
-import dev.earthly.plugin.language.syntax.lexer.EarthlyElementType;
-import dev.earthly.plugin.metadata.EarthlyFileType;
-
-import java.io.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import org.jetbrains.plugins.textmate.bundles.Bundle;
-import org.jetbrains.plugins.textmate.bundles.VSCBundle;
 import org.jetbrains.plugins.textmate.language.TextMateLanguageDescriptor;
 import org.jetbrains.plugins.textmate.language.syntax.TextMateSyntaxTable;
 import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateElementType;
@@ -22,6 +10,8 @@ import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateScope;
 import org.jetbrains.plugins.textmate.plist.CompositePlistReader;
 import org.jetbrains.plugins.textmate.plist.Plist;
 import org.jetbrains.plugins.textmate.plist.PlistReader;
+
+import java.io.InputStream;
 
 public class EarthlyHighlightingLexer extends TextMateHighlightingLexer {
 
