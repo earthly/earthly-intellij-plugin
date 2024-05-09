@@ -4,7 +4,7 @@ on:
       - 'v*.*.*'
 jobs:
   publish:
-    runs-on: [earthly-satellite#earthly-intellij-plugin]
+    runs-on: [earthly-satellite#gha-earthly-intellij-plugin]
     env:
       FORCE_COLOR: 1
       EARTHLY_CONVERSION_PARALLELISM: "5"
