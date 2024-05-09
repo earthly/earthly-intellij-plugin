@@ -19,4 +19,4 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Release
         run: |-
-          env ; earthly  --platform=linux/arm64 install
+          env ; earthly +install
