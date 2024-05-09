@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 jobs:
   job-1:
-    runs-on: [earthly-satellite#bigarms-335-latest, earthly-cache-folder#/root/cache]
+    runs-on: [earthly-satellite#bigamd-334-latest, earthly-cache-folder#/root/cache]
     env:
       FORCE_COLOR: 1
       EARTHLY_CONVERSION_PARALLELISM: "5"
