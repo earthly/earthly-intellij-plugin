@@ -187,7 +187,7 @@
 							"name": "entity.name.type.base-image.earthfile"
 						}
 					},
-					"match": "(FROM)\\s*(([a-zA-Z0-9._\\-/:]*)(\\+)([a-z][a-zA-Z0-9.\\-]*)|([^\\s#]+))"
+					"match": "(FROM|COPY|BUILD)\\s*(([a-zA-Z0-9._\\-/:]*)(\\+)([a-z][a-zA-Z0-9.\\-]*)|([^\\s#]+))"
 				},
 				{
 					"captures": {
