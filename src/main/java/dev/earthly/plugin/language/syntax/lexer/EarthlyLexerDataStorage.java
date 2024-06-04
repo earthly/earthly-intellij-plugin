@@ -3,6 +3,7 @@ package dev.earthly.plugin.language.syntax.lexer;
 import com.intellij.openapi.editor.ex.util.DataStorage;
 import com.intellij.openapi.editor.ex.util.ShortBasedStorage;
 import com.intellij.psi.tree.IElementType;
+import dev.earthly.plugin.language.syntax.highlighting.EarthlyTokenSets;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class EarthlyLexerDataStorage extends ShortBasedStorage {
 
   @Override
   public IElementType unpackTokenFromData(int data) {
-    return data != 0 ? tokenTypes.get(Math.abs(data) - 1) : new EarthlyElementType(TextMateScope.EMPTY);
+    return data != 0 ? tokenTypes.get(Math.abs(data) - 1) : EarthlyTokenSets.EMPTY;
   }
 
   @Override

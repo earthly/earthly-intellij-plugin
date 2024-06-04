@@ -3,14 +3,13 @@ package dev.earthly.plugin.language.syntax.lexer;
 import com.intellij.psi.tree.IElementType;
 import dev.earthly.plugin.metadata.EarthlyLanguage;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateElementType;
 import org.jetbrains.plugins.textmate.language.syntax.lexer.TextMateScope;
 
 public class EarthlyElementType extends IElementType {
   private final TextMateScope myScope;
 
   public EarthlyElementType(@NotNull TextMateScope scope) {
-    super("EARTHLY_TOKEN", EarthlyLanguage.INSTANCE, false);
+    super(scope.toString(), EarthlyLanguage.INSTANCE);
     myScope = scope;
   }
 

@@ -1,0 +1,13 @@
+VERSION 0.8
+
+# Comment
+INSTALL_DIND:
+    FUNCTION
+    DO ./utils/dind+INSTALL
+
+dep:
+    FROM alpine
+
+test:
+    FROM +dep
+    DO +INSTALL_DIND
