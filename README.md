@@ -6,18 +6,16 @@ Check the currently released versions [on the JetBrains Marketplace](https://plu
 
 ## Features
 - [x] Syntax highlighting for Earthfiles
-- [ ] Code completion
+- [x] Code completion
+- [x] Commenter
+- [x] Go to definition/usage
+- [x] Find usages
 - [ ] Formatter
-- [ ] Commenter
-- [ ] Go To Symbol Contributor
 - [ ] ... Let us know!
+
 
 ![Darcula theme](documentation/darcula.png)
 ![Light theme](documentation/light.png)
-
-## Requirements
-
-This plugin is dependent on https://github.com/earthly/earthfile-grammar for syntax.
 
 ## Building
 The following command generates a `earthly-intellij-plugin-<version>.zip` package in the current directory:
