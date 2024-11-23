@@ -28,16 +28,9 @@
 
 
   <change-notes><![CDATA[
-<h2>New Features by <a href="https://github.com/ingwarsw">Karol Lassak</a></h2>
+<h2>New Features</h2>
 <ul>
- <li>Fixed function names colors</li>
- <li>Some extra colors in highlighter</li>
- <li>Add commenter</li>
- <li>Added completion (works for targets and functions)</li>
- <li>Added go to definition/usage (works for targets and functions)</li>
- <li>Added find usages (works for targets and functions)</li>
- <li>Working refactoring (works for targets and functions)</li>
- <li>Added custom name validator to validate targets and function names properly</li>
+ <li>Add support for platform build 243</li>
 </ul>
 ]]>
   </change-notes>
