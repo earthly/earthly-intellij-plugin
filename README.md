@@ -1,3 +1,7 @@
+> ⚠️ This plugin has been officially deprecated and will no longer receive updates.
+>
+>  Please migrate to its successor: https://github.com/EarthBuild/earthly-intellij-plugin.
+
 # earthly-intellij-plugin
 
 IntelliJ plugin for Earthly language support. 
